@@ -2,11 +2,18 @@ import 'package:fic10_cbt/core/assets/assets.gen.dart';
 import 'package:fic10_cbt/core/components/search_input.dart';
 import 'package:fic10_cbt/core/constants/colors.dart';
 import 'package:fic10_cbt/core/extensions/build_context_ext.dart';
+import 'package:fic10_cbt/data/datasources/auth_local_datasource.dart';
+import 'package:fic10_cbt/data/models/responses/auth_response_model.dart';
 import 'package:flutter/material.dart';
 
-class HeaderHome extends StatelessWidget {
+class HeaderHome extends StatefulWidget {
   const HeaderHome({super.key});
 
+  @override
+  State<HeaderHome> createState() => _HeaderHomeState();
+}
+
+class _HeaderHomeState extends State<HeaderHome> {
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController();
@@ -35,27 +42,35 @@ class HeaderHome extends StatelessWidget {
             ),
             SizedBox(
               width: context.deviceWidth - 208.0,
-              child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Hello',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Hello',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Text(
-                      'Endros',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ]),
+                  ),
+                  FutureBuilder<AuthResponseModel>(
+                    future: AuthLocalDatasource().getAuthData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data!.user.name,
+                          style: const TextStyle(
+                              color: AppColors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
             const Spacer(),
             IconButton(

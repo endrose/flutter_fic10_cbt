@@ -1,4 +1,3 @@
-import 'package:fic10_cbt/core/extensions/build_context_ext.dart';
 import 'package:fic10_cbt/presentation/home/widgets/header_home.dart';
 import 'package:fic10_cbt/presentation/home/widgets/menu_home.dart';
 import 'package:fic10_cbt/presentation/home/widgets/title_section.dart';

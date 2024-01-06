@@ -1,8 +1,6 @@
-import 'dart:html';
-import 'dart:math';
-
 import 'package:fic10_cbt/core/components/buttons.dart';
 import 'package:fic10_cbt/core/extensions/build_context_ext.dart';
+import 'package:fic10_cbt/data/datasources/onboarding_local_datasource.dart';
 import 'package:fic10_cbt/presentation/auth/pages/login_page.dart';
 // import 'package:fic10_cbt/core/extensions/build_context_ext.dart';
 import 'package:fic10_cbt/presentation/onboarding/model/onboarding_model.dart';
@@ -92,6 +90,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       currentPage++;
                       setState(() {});
                     } else {
+                      OnboardingLocalDatasource().saveOnboardingPassed();
                       navigate();
                     }
                   },
